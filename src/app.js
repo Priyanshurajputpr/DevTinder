@@ -3,28 +3,24 @@
 const express = require("express");
 const app = express();
 
-app.use(
-  "/user",
-  (req, res, next) => {
-    console.log("Response 1");
-   next();
-    // res.send("Route Handler 1");
-  },
-  (req, res,next) => {
-    console.log("Response 2");
-    // res.send("Route Handler 2");
-    next();
-  },
-    (req, res,next) => {
-    console.log("Response 3");
-    // res.send("Route Handler 3");
-    next();
-  },
-    (req, res) => {
-    console.log("Response 4");
-    res.send("Route Handler 4");
-  },
-);
+const {authAdmin, authUser} = require("./middlewares/auth");
+
+app.use("/admin",authAdmin);
+
+app.use("/user/login",(req,res)=>{
+  res.send("Logged in successfully!!");
+})
+
+app.use("/user/data",authUser,(req,res)=>{
+  res.send("User data sent");
+});
+
+app.get("/admin/getAllData",(req,res)=>{
+  res.send("Got All Data");
+});
+app.get("/admin/deleteUser",(req,res)=>{
+  res.send("Deleted the user");
+})
 
 app.listen(3000, () => {
   console.log("Server is responding on port 3000 ....");
