@@ -3,6 +3,21 @@
 const express  = require("express");
 const app = express();
 
+app.get("/user",(req , res)=>{
+  res.send({
+    "firstname":"Priyanshu",
+    "lastname":"Rajput"
+  })
+});
+app.post("/user",(req,res)=>{
+  res.send("Data saved successfully");
+});
+app.patch("/user",(req,res)=>{
+  res.send("Data saved successfully");
+});
+app.delete("/user",(req,res)=>{
+  res.send("Data deleted successfully");
+});
 app.use("/test", (req, res) => {
   res.send("Testing for routers");
 });
