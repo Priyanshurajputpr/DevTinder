@@ -53,6 +53,31 @@ app.get("/userOne",async(req,res)=>{
   }
 });
 
+//DELETE API 
+app.delete('/user',async(req,res)=>{
+  const userId = req.body._id;
+  try{
+    const user = await User.findByIdAndDelete({_id:userId});
+    res.send("User deleted successfully");
+  }
+  catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
+
+//UPDATE API
+app.patch("/user",async(req,res)=>{
+  const userId = req.body._id;
+  const data = req.body;
+  try{
+    const user = await User.findByIdAndUpdate(userId,data,{returnDocument:"after"});
+    console.log(user);
+    res.send("User updated successfully");
+  }
+  catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
 
 app.post("/signup", async (req,res)=>{
   //Creating a new instance of user model
