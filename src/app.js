@@ -1,57 +1,30 @@
 //This is the strarting file of your application .... this the main core js file where we will write nodeJs code
 
 const express = require("express");
+const {connectDB} = require("./config/database");
 const app = express();
+const User = require('./model/user');
 
-// const {authAdmin, authUser} = require("./middlewares/auth");
-
-// app.use("/admin",authAdmin);
-
-// app.use("/user/login",(req,res)=>{
-//   res.send("Logged in successfully!!");
-// })
-
-// app.use("/user/data",authUser,(req,res)=>{
-//   res.send("User data sent");
-// });
-
-// app.get("/admin/getAllData",(req,res)=>{
-//   res.send("Got All Data");
-// });
-// app.get("/admin/deleteUser",(req,res)=>{
-//   res.send("Deleted the user");
-// })
-
-
-// app.use("/error",(err,req,res,next)=>{
-//   if(err){
-//     res.status(501).send("Something went wrong");
-//   }
-// });
-
-app.use("/",(err,req,res,next)=>{
-  if(err){
-    res.status(500).send("Something went wrong");
-  }
+app.post("/signup", async (req,res)=>{
+  //Creating a new instance of user model
+const user = new User({
+    firstName : "Shiv",
+    lastName : "Tiwari",
+    emailID  : "Shiv@gmail.com",
+    password : "shIv@123"
+  }); 
+  await user.save();
+  res.send("User added successfully!!");
 });
 
-app.use("/getUserData",(req,res)=>{
-    try{
-    throw new Error("iuuivr");
-    res.send("User Data Sent");
-    }
-    catch(err){
-      res.status(500).send("Contact support");
-    }
-});
-
-app.use("/",(err,req,res,next)=>{
-  if(err){
-    res.status(500).send("Something went wrong");
-  }
-});
-
-app.listen(3000, () => {
+connectDB()
+.then(()=>{
+  console.log("Database connection established");
+  app.listen(3000, () => {
   console.log("Server is responding on port 3000 ....");
+}); 
+})
+.catch((err)=>{
+  console.error("Database can not be connected");
 });
- 
+
