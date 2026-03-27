@@ -4,6 +4,7 @@ const express = require("express");
 const {connectDB} = require("./config/database");
 const app = express();
 const User = require('./model/user');
+const user = require("./model/user");
 app.use(express.json());
 
 //GET API ==> get user data by emailID
@@ -11,6 +12,35 @@ app.get("/user",async(req,res)=>{
   const userEmail = req.body.emailID;
   try{
   const user = await User.find({emailID : userEmail});
+  if(user.length === 0){
+    res.status(401).send("User not found");
+  }
+    else{
+      res.send(user);
+    }
+  }
+  catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
+
+//GET all users
+
+app.get("/feed",async(req,res)=>{
+  try{
+    const users = await User.find({});
+    res.send(users);
+  }
+ catch(err){
+    res.status(400).send("Something went wrong");
+  }
+});
+
+// usecase of findOne();
+app.get("/userOne",async(req,res)=>{
+  const userEmail = req.body.emailID;
+  try{
+  const user = await User.findOne({emailID : userEmail});
   if(user.length === 0){
     res.status(401).send("User not found");
   }
