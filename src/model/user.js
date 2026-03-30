@@ -5,12 +5,12 @@ const userSchema = new mongoose.Schema({
     type :String,
     required:true,
     maxLength:20,
-    minLength:10,
+    minLength:5,
   },
   lastName:{
     type:String,
     maxLength:20,
-    minLength:10,
+    minLength:5,
   },
   emailID:{
     type:String,
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     type:String,
     default:"https://pngtree.com/freepng/user-avatar-boy_4693645.html",
     validate(value){
-      if(!validate.isURL(value)){
+      if(!validator.isURL(value)){
         throw new Error("Not valid URL")
       }
     }
