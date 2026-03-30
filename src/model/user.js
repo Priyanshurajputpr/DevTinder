@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const validator = require("validator");
 const userSchema = new mongoose.Schema({
   firstName:{
     type :String,
@@ -19,11 +19,21 @@ const userSchema = new mongoose.Schema({
     lowercase:true,
     trim:true,
     unique:true,
+    validate(value){
+      if(!validator.isEmail(value)){
+        throw new Error("Inavalid email addresss")
+      }
+    }
   },
   password:{
     type:String,
     required:true,
     trim:true,
+    validate(value){
+    if(!validator.isStrongPassword(value)){
+      throw new Error("Not a strong password")
+    }
+    },
   },
   age:{
     type:Number,
@@ -47,7 +57,11 @@ const userSchema = new mongoose.Schema({
    photoURL:{
     type:String,
     default:"https://pngtree.com/freepng/user-avatar-boy_4693645.html",
-   
+    validate(value){
+      if(!validate.isURL(value)){
+        throw new Error("Not valid URL")
+      }
+    }
   },
 },
 {timestamps:true},);
