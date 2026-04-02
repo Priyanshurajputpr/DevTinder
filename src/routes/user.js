@@ -2,6 +2,7 @@ const express = require("express");
 const { authUser } = require("../middlewares/auth");
 const userRouter = express.Router();
 const ConnectionRequest = require("../model/connectionRequest");
+const User = require("../model/user");
 
 const USER_SAFE_LIST = ["firstName" , "lastName" , "age" , "about" , "photoURL"];
 
