@@ -11,6 +11,7 @@ const user = require("./model/user");
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const authRouter = require("./routes/auth")
+const userRouter = require("./routes/user");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -18,6 +19,8 @@ app.use(cookieParser());
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
+
 
 //GET API ==> get user data by emailID
 app.get("/user", async (req, res) => {
