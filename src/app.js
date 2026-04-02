@@ -7,7 +7,7 @@ const { connectDB } = require("./config/database");
 const app = express();
 const {authUser} = require("./middlewares/auth");
 const user = require("./model/user");
-const { validateSignUpData } = require("./utils/validation");
+
 const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const authRouter = require("./routes/auth")

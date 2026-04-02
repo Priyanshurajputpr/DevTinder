@@ -13,7 +13,7 @@ authRouter.post("/signup", async (req, res) => {
 
     const { password, firstName, lastName, emailID } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
+    // console.log(passwordHash);
     //Creating a new instance of user model
     const user = new User({
       firstName,
@@ -44,7 +44,7 @@ authRouter.post("/login",async(req,res)=>{
    if(isPasswordValid){
     // create JWT token
     const token = await user.getJWT();
-    console.log(token);
+    // console.log(token);
    //Add token to cookie and send the response back to the user
     res.cookie("token",token,{expires:new Date(Date.now()+7*3600000)});
     res.send("Login Successfull!!");
@@ -56,6 +56,13 @@ authRouter.post("/login",async(req,res)=>{
   catch(err){
     res.status(400).send("ERROR : "+ err.message);
   }
+});
+
+authRouter.post("/logout",async(req,res)=>{
+  res.cookie("token",null,{expires:new Date(Date.now())  
+  }
+  );
+  res.send("Logged out");
 });
 
 module.exports = authRouter;
